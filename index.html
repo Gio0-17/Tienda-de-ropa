@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tienda de Ropa Sencilla</title>
+  <title>Shop Dress - Tienda de Ropa</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <style>
-    /* Modern neutral color theme and spacing */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
     * {
@@ -15,29 +15,217 @@
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background: #f5f5f4; /* light neutral background */
+      background: #f5f5f4;
       color: #333333;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
     }
 
     header {
-      background: #e7e5e4; /* subtle neutral */
-      padding: 24px 32px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-      text-align: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #e7e5e4;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      z-index: 1000;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
       font-weight: 700;
-      font-size: 1.8rem;
-      letter-spacing: 0.05em;
+      font-size: 1.5rem;
       color: #1f2937;
+      letter-spacing: 0.08em;
+      user-select: none;
+    }
+
+    /* Navigation menu */
+    nav {
+      display: flex;
+      gap: 24px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #4b5563;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 8px 0;
+      position: relative;
+      transition: color 0.3s ease;
+      user-select: none;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      color: #111827;
+      outline-offset: 3px;
+      outline: 2px solid transparent;
+      outline-radius: 4px;
+    }
+
+    /* Search box */
+    .header-search {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .header-search input[type="search"] {
+      padding: 8px 36px 8px 12px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      width: 200px;
+      transition: border-color 0.3s ease;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .header-search input[type="search"]:focus {
+      border-color: #6366f1;
+      outline: none;
+      box-shadow: 0 0 6px #6366f1aa;
+    }
+
+    .header-search .material-icons {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6b7280;
+      pointer-events: none;
+      font-size: 20px;
+    }
+
+    /* Social media and cart area */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      user-select: none;
+    }
+
+    .social-icon {
+      color: #4b5563;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      font-size: 24px;
+    }
+
+    .social-icon:hover,
+    .social-icon:focus {
+      color: #6366f1;
+      outline: none;
+    }
+
+    /* Shopping cart with badge */
+    .cart {
+      position: relative;
+      cursor: pointer;
+      color: #4b5563;
+      font-size: 28px;
+      transition: color 0.3s ease;
+    }
+
+    .cart:hover,
+    .cart:focus {
+      color: #6366f1;
+      outline: none;
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: #ef4444;
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 12px;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Responsive menu toggle (hamburger) */
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 32px;
+      color: #4b5563;
+      user-select: none;
+    }
+
+    .menu-toggle:focus {
+      outline-offset: 2px;
+      outline: 2px solid #6366f1;
+      outline-radius: 4px;
+    }
+
+    /* Responsive nav for small screens */
+    @media (max-width: 768px) {
+      nav {
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: #e7e5e4;
+        flex-direction: column;
+        padding: 16px 24px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        z-index: 999;
+      }
+
+      nav.open {
+        max-height: 300px;
+      }
+
+      nav a {
+        padding: 12px 0;
+        font-size: 1.2rem;
+      }
+
+      .header-search input[type="search"] {
+        width: 100%;
+      }
+
+      .header-right {
+        gap: 12px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .header-search {
+        display: none;
+      }
+
     }
 
     main {
+      margin-top: 80px; /* space below fixed header */
       flex-grow: 1;
       max-width: 1024px;
-      margin: 32px auto;
-      padding: 0 16px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 32px 16px 48px;
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 32px;
@@ -82,11 +270,10 @@
       font-weight: 500;
     }
 
-    /* Responsive adjustments */
     @media (max-width: 640px) {
       main {
         grid-template-columns: 1fr;
-        margin: 16px;
+        padding: 24px 16px 48px;
         gap: 24px;
       }
       .product-image {
@@ -98,48 +285,120 @@
 </head>
 <body>
   <header role="banner">
-    Tienda de Ropa Sencilla
+    <div class="header-left">
+      <button class="menu-toggle" aria-label="Mostrar menú" aria-expanded="false" aria-controls="primary-navigation">
+        <span class="material-icons">menu</span>
+      </button>
+      <div class="logo">Shop Dress</div>
+    </div>
+
+    <nav id="primary-navigation" role="navigation" aria-label="Menú principal">
+      <a href="#" tabindex="0">Inicio</a>
+      <a href="#" tabindex="0">Tienda</a>
+      <a href="#" tabindex="0">Acerca</a>
+      <a href="#" tabindex="0">Contacto</a>
+    </nav>
+
+    <div class="header-search">
+      <label for="search-input" class="visually-hidden">Buscar productos</label>
+      <input type="search" id="search-input" placeholder="Buscar productos…" aria-label="Buscar productos" />
+      <span class="material-icons" aria-hidden="true">search</span>
+    </div>
+
+    <div class="header-right">
+      <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook" class="social-icon" tabindex="0">
+        <span class="material-icons" aria-hidden="true">facebook</span>
+      </a>
+      <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram" class="social-icon" tabindex="0">
+        <span class="material-icons" aria-hidden="true">photo_camera</span>
+      </a>
+      <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter" class="social-icon" tabindex="0">
+        <span class="material-icons" aria-hidden="true">twitter</span>
+      </a>
+
+      <button class="cart" aria-label="Ver carrito de compras" tabindex="0">
+        <span class="material-icons" aria-hidden="true">shopping_cart</span>
+        <span class="cart-badge" aria-live="polite" aria-atomic="true">0</span>
+      </button>
+    </div>
   </header>
 
   <main role="main" aria-label="Catálogo de productos">
     <article class="product-card" role="listitem" tabindex="0" aria-label="Camiseta, $25">
-      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/221f2ce1-f950-4234-998e-4a8d82ee2016.png" alt="Imagen de una camiseta blanca con cuello redondo" class="product-image" />
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/85ab30ac-1bb2-4daa-9a63-7ed349e55cf9.png" alt="Imagen de una camiseta blanca con cuello redondo" class="product-image" />
       <div class="product-name">Camiseta</div>
       <div class="product-price">$25.00</div>
     </article>
 
     <article class="product-card" role="listitem" tabindex="0" aria-label="Pantalones, $40">
-      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ceb63b68-23d0-44ac-b220-843cbbceb3c7.png" alt="Imagen de pantalones de mezclilla azul claro" class="product-image" />
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b1e42284-c809-495c-9c33-7998ebdaa0b0.png" alt="Imagen de pantalones de mezclilla azul claro" class="product-image" />
       <div class="product-name">Pantalones</div>
       <div class="product-price">$40.00</div>
     </article>
 
     <article class="product-card" role="listitem" tabindex="0" aria-label="Chaqueta, $60">
-      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4ac1ba7c-d03c-4455-9088-f0f450ebd41e.png" alt="Imagen de una chaqueta gris con cremallera frontal" class="product-image" />
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5e658c45-2291-433e-9317-e4cfc521b5c3.png" alt="Imagen de una chaqueta gris con cremallera frontal" class="product-image" />
       <div class="product-name">Chaqueta</div>
       <div class="product-price">$60.00</div>
     </article>
 
     <article class="product-card" role="listitem" tabindex="0" aria-label="Vestido, $50">
-      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e1860bc4-ccf8-4d11-ba70-30a6620f2fba.png" alt="Imagen de un vestido elegante color beige" class="product-image" />
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d2c00f0f-6f87-4c07-8f5a-6b8be363efd8.png" alt="Imagen de un vestido elegante color beige" class="product-image" />
       <div class="product-name">Vestido</div>
       <div class="product-price">$50.00</div>
     </article>
 
     <article class="product-card" role="listitem" tabindex="0" aria-label="Zapatos, $70">
-      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/69eb4168-0cdd-48c4-bda9-fd0cf96323a1.png" alt="Imagen de zapatos de cuero color marrón" class="product-image" />
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/42b9e09d-9197-443f-adef-3747bbadb28c.png" alt="Imagen de zapatos de cuero color marrón" class="product-image" />
       <div class="product-name">Zapatos</div>
       <div class="product-price">$70.00</div>
     </article>
 
     <article class="product-card" role="listitem" tabindex="0" aria-label="Sombrero, $20">
-      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c4b7d5f5-3259-4da4-9fed-c08509c69127.png" alt="Imagen de un sombrero de ala ancha color beige" class="product-image" />
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8abc8403-0488-4acc-a0b4-a4dad1291996.png" alt="Imagen de un sombrero de ala ancha color beige" class="product-image" />
       <div class="product-name">Sombrero</div>
       <div class="product-price">$20.00</div>
     </article>
   </main>
+
+  <script>
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.getElementById('primary-navigation');
+
+    menuToggle.addEventListener('click', () => {
+      const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', !expanded);
+      nav.classList.toggle('open');
+    });
+
+    // Close menu on focusout for accessibility
+    nav.addEventListener('focusout', (event) => {
+      if (!nav.contains(event.relatedTarget)) {
+        nav.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', false);
+      }
+    });
+  </script>
+
+  <style>
+    /* Visually hidden for accessibility labeling */
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+  </style>
 </body>
 </html>
+
+
 
 
 
